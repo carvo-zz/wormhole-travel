@@ -3,6 +3,7 @@ package com.gamesys.wormholetravel.handlers;
 import com.gamesys.wormholetravel.UrlMapping;
 import com.gamesys.wormholetravel.commons.ServiceResponse;
 import com.gamesys.wormholetravel.models.TravelDetail;
+import com.gamesys.wormholetravel.models.Traveler;
 import com.gamesys.wormholetravel.services.TravelService;
 import com.gamesys.wormholetravel.utils.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class TravelHandler {
     private TravelService service;
 
     @PostMapping(UrlMapping.Travels.POST)
-    public ResponseEntity<String> post(final TravelDetail travelDetail) {
-        final ServiceResponse response = service.travel(travelDetail);
+    public ResponseEntity<String> post(final Traveler traveler) {
+        final ServiceResponse response = service.travel(traveler);
 
         String responseBody = "";
         if (response.hasError()) {

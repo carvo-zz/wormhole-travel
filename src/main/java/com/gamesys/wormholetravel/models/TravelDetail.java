@@ -1,17 +1,15 @@
 package com.gamesys.wormholetravel.models;
 
 public class TravelDetail {
-    private String personalGalacticIdentifier;
     private String place;
     private Long date;
 
-
-    public String getPersonalGalacticIdentifier() {
-        return personalGalacticIdentifier;
+    public TravelDetail(){
     }
 
-    public void setPersonalGalacticIdentifier(String personalGalacticIdentifier) {
-        this.personalGalacticIdentifier = personalGalacticIdentifier;
+    public TravelDetail(String place, Long date) {
+        this.place = place;
+        this.date = date;
     }
 
     public String getPlace() {

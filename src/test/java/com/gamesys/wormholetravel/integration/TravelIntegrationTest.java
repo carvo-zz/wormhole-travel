@@ -2,7 +2,7 @@ package com.gamesys.wormholetravel.integration;
 
 import com.gamesys.wormholetravel.App;
 import com.gamesys.wormholetravel.models.TravelDetail;
-import com.gamesys.wormholetravel.integration.util.UrlResolver;
+import com.gamesys.wormholetravel.integration.utils.UrlResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,10 +35,15 @@ public class TravelIntegrationTest {
     }
 
     @Test
+    public void shouldValidateNullRequest() {
+
+    }
+
+
+    @Test
     public void shouldTravel() throws Exception {
         final TravelDetail travel = new TravelDetail();
         travel.setDate(0L);
-        travel.setPersonalGalacticIdentifier("carvo123");
         travel.setPlace("The Restaurant at the End of the Universe");
 
         final String body = new ObjectMapper().writeValueAsString(travel);

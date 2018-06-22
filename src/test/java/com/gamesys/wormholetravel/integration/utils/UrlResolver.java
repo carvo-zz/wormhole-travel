@@ -1,4 +1,4 @@
-package com.gamesys.wormholetravel.integration.util;
+package com.gamesys.wormholetravel.integration.utils;
 
 public final class UrlResolver {
 

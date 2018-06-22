@@ -5,6 +5,7 @@ import com.gamesys.wormholetravel.commons.ServiceResponse;
 import com.gamesys.wormholetravel.models.TravelDetail;
 import com.gamesys.wormholetravel.handlers.TravelHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gamesys.wormholetravel.models.Traveler;
 import com.gamesys.wormholetravel.services.TravelService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,10 +36,9 @@ public class TravelHandlerTest {
 
     @Test
     public void shouldTravel() throws Exception {
-        final TravelDetail travel = new TravelDetail();
-        travel.setDate(0L);
-        travel.setPersonalGalacticIdentifier("carvo123");
-        travel.setPlace("The Restaurant at the End of the Universe");
+        final Traveler traveler = new Traveler();
+        traveler.setPersonalGalacticIdentifier("carvo123");
+        traveler.setTravel(new TravelDetail("The Restaurant at the End of the Universe", 0L));
 
         final ServiceResponse mockedServiceResponse = mock(ServiceResponse.class);
 
@@ -46,7 +46,7 @@ public class TravelHandlerTest {
         when(mockedServiceResponse.hasError()).thenReturn(false);
 
         final MockHttpServletRequestBuilder builder = post(UrlMapping.Travels.POST)
-                .content(jacksonMapper.writeValueAsString(travel))
+                .content(jacksonMapper.writeValueAsString(traveler))
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(builder)

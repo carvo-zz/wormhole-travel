@@ -1,4 +1,4 @@
-package com.gamesys.wormholetravel.unit.util;
+package com.gamesys.wormholetravel.unit.utils;
 
 import com.gamesys.wormholetravel.utils.JsonParser;
 import org.json.JSONException;
