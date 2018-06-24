@@ -37,8 +37,8 @@ public class TravelHandlerTest {
     @Test
     public void shouldTravel() throws Exception {
         final Traveler traveler = new Traveler();
-        traveler.setPersonalGalacticIdentifier("carvo123");
-        traveler.setTravel(new TravelDetail("The Restaurant at the End of the Universe", 0L));
+        traveler.setPgi("carvo123");
+        traveler.setCurrentTravel(new TravelDetail("The Restaurant at the End of the Universe", 0L));
 
         final ServiceResponse mockedServiceResponse = mock(ServiceResponse.class);
 
