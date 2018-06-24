@@ -1,7 +1,7 @@
 package com.gamesys.wormholetravel.integration;
 
 import com.gamesys.wormholetravel.App;
-import com.gamesys.wormholetravel.models.TravelDetail;
+import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.integration.utils.UrlResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
@@ -42,7 +42,7 @@ public class TravelIntegrationTest {
 
     @Test
     public void shouldTravel() throws Exception {
-        final TravelDetail travel = new TravelDetail();
+        final Travel travel = new Travel();
         travel.setDate(0L);
         travel.setPlace("The Restaurant at the End of the Universe");
 

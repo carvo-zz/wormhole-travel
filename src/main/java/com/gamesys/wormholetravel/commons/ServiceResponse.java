@@ -1,5 +1,7 @@
 package com.gamesys.wormholetravel.commons;
 
+import com.gamesys.wormholetravel.utils.JsonParser;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,12 +14,10 @@ public class ServiceResponse<T> {
     private Map<String, String> errors;
 
     public ServiceResponse() {
-        this.errors = new LinkedHashMap<>();
     }
 
     public ServiceResponse(T response) {
         this.response = response;
-        this.errors = new LinkedHashMap<>();
     }
 
     public ServiceResponse(Map<String, String> errors) {
@@ -34,6 +34,10 @@ public class ServiceResponse<T> {
 
     public Map<String, String> getErrors() {
         return Collections.unmodifiableMap(errors);
+    }
+
+    public String getErrorsAsJson() {
+        return JsonParser.toJson(getErrors());
     }
 
     public void setErrors(Map<String, String> errors) {

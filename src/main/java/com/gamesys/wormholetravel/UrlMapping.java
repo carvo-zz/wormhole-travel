@@ -1,15 +1,12 @@
 package com.gamesys.wormholetravel;
 
 public final class UrlMapping {
-    private static final String BASE = "/time-traveler";
-
-
-    public final class Travels {
-        public static final String POST = BASE + "/travels";
-    }
+    private static final String BASE = "/time-travel";
 
     public final class Travelers {
-        private static final String TRAVALERS_BASE = "/travelers/{pgi}";
-        public static final String GET_TRAVELS = BASE + TRAVALERS_BASE + "/travels";
+        public static final String BASE = UrlMapping.BASE + "/travelers";
+
+        public static final String TRAVELS = BASE + "/{pgi}/travels";
+        public static final String OLD_TRAVELS = BASE + "/{pgi}/old-travels";
     }
 }

@@ -1,11 +1,23 @@
 package com.gamesys.wormholetravel.models;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 
 public class Traveler {
+    @Id
     private String pgi;
-    private TravelDetail currentTravel;
-    private List<TravelDetail> historical;
+    private Travel currentTravel;
+    private List<Travel> historic;
+
+    public Traveler() {
+
+    }
+
+    public Traveler(String pgi, Travel currentTravel) {
+        this.pgi = pgi;
+        this.currentTravel = currentTravel;
+    }
 
     public String getPgi() {
         return pgi;
@@ -15,19 +27,19 @@ public class Traveler {
         this.pgi = pgi;
     }
 
-    public TravelDetail getCurrentTravel() {
+    public Travel getCurrentTravel() {
         return currentTravel;
     }
 
-    public void setCurrentTravel(TravelDetail currentTravel) {
+    public void setCurrentTravel(Travel currentTravel) {
         this.currentTravel = currentTravel;
     }
 
-    public List<TravelDetail> getHistorical() {
-        return historical;
+    public List<Travel> getHistoric() {
+        return historic;
     }
 
-    public void setHistorical(List<TravelDetail> historical) {
-        this.historical = historical;
+    public void setHistoric(List<Travel> historic) {
+        this.historic = historic;
     }
 }

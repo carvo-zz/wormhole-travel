@@ -28,6 +28,7 @@ dependencies {
 //	compile('ch.qos.logback:logback-classic:1.2.3')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

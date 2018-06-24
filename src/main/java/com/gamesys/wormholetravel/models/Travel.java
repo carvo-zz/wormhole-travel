@@ -1,13 +1,13 @@
 package com.gamesys.wormholetravel.models;
 
-public class TravelDetail {
+public class Travel {
     private String place;
     private Long date;
 
-    public TravelDetail(){
+    public Travel(){
     }
 
-    public TravelDetail(String place, Long date) {
+    public Travel(String place, Long date) {
         this.place = place;
         this.date = date;
     }
