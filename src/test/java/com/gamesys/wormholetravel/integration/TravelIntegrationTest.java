@@ -1,6 +1,7 @@
 package com.gamesys.wormholetravel.integration;
 
 import com.gamesys.wormholetravel.App;
+import com.gamesys.wormholetravel.UrlMapping;
 import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.integration.utils.UrlResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -48,12 +52,12 @@ public class TravelIntegrationTest {
 
         final String body = new ObjectMapper().writeValueAsString(travel);
         final HttpEntity<String> entity = new HttpEntity<>(body, headers);
-        final String uri = UrlResolver.targetUri(port, "/travels");
+        final String uri = UrlResolver.targetUri(port, UrlMapping.Travelers.TRAVELS);
 
         final ResponseEntity<String> response = restTemplate.exchange(
-                uri, HttpMethod.POST, entity, String.class);
+                uri.replace("{pgi}", "carvolindo"),
+                HttpMethod.POST, entity, String.class);
 
-        JSONAssert.assertEquals("", response.getBody(), false);
         Assert.assertEquals(STATUS_CREATED, response.getStatusCodeValue());
     }
 

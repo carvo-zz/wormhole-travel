@@ -42,14 +42,12 @@ public class TravelerHandler {
 
     @PostMapping(UrlMapping.Travelers.TRAVELS)
     public ResponseEntity<String> travel(@PathVariable String pgi, @RequestBody Travel destination) {
-        final ServiceResponse response = service.travel(pgi, destination);
-
-        if (response.hasError()) {
-            return new ResponseEntity<>(response.getErrorsAsJson(), HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return new ResponseEntity<>("", HttpStatus.CREATED);
-        }
+        return Optional.ofNullable(service.travel(pgi, destination))
+                .filter(ServiceResponse::hasError)
+                .map(ServiceResponse::getErrorsAsJson)
+                .map(s -> new ResponseEntity(s, HttpStatus.BAD_REQUEST))
+                .orElse(new ResponseEntity<>("", HttpStatus.CREATED))
+                ;
     }
 
 

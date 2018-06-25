@@ -47,13 +47,9 @@ public class Traveler {
 
     public void travelTo(Travel destination) {
         Optional.ofNullable(getCurrentTravel())
-                .ifPresentOrElse(
-                        ct -> {
-                            addHistoric(ct);
-                            setCurrentTravel(destination);
-                        },
-                        () -> setCurrentTravel(destination)
-                );
+            .ifPresent(this::addHistoric);
+
+        setCurrentTravel(destination);
     }
 
     private void addHistoric(Travel travel) {

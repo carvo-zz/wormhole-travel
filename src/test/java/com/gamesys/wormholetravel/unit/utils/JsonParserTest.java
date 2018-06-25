@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class JsonParserTest {
@@ -49,12 +50,15 @@ public class JsonParserTest {
 
     @Test
     public void shouldConvertMap2Json() throws JSONException {
-        final Map<String, Object> data = Map.of(
-                "id", 1,
-                "name", "Some name",
-                "anotherDto", Map.of(
-                        "id", 2,
-                        "name", "anothername"));
+        final Map<String, Object> anotherDto = new HashMap() {{
+            put("id", 2);
+            put("name", "anothername");
+        }};
+        final Map<String, Object> data = new HashMap() {{
+            put("id", 1);
+            put("name", "Some name");
+            put("anotherDto", anotherDto);
+        }};
 
         final String actual = JsonParser.toJson(data);
 

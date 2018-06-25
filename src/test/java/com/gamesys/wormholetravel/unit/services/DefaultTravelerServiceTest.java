@@ -5,6 +5,8 @@ import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.models.Traveler;
 import com.gamesys.wormholetravel.repositories.TravelerRepository;
 import com.gamesys.wormholetravel.services.DefaultTravelerService;
+import com.gamesys.wormholetravel.validators.TravelValidator;
+import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -26,6 +30,9 @@ public class DefaultTravelerServiceTest {
     @Mock
     private TravelerRepository repository;
 
+    @Mock
+    private TravelValidator validator;
+
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
@@ -33,7 +40,10 @@ public class DefaultTravelerServiceTest {
 
     @Test
     public void shouldFindAll() {
-        final List<Traveler> travelers = List.of(new Traveler(), new Traveler());
+        final List<Traveler> travelers = new ArrayList(){{
+            add(new Traveler());
+            add(new Traveler());
+        }};
 
         when(repository.findAll()).thenReturn(travelers);
 
@@ -57,18 +67,24 @@ public class DefaultTravelerServiceTest {
     @Test
     public void shouldTravel() {
         final String pgi = "carvo123";
-        final Travel travel = new Travel();
+        final Travel destination = new Travel();
         final Traveler traveler = mock(Traveler.class);
+        final Travel currentTravel = new Travel();
 
         when(repository.findByPgi(pgi)).thenReturn(traveler);
+        when(traveler.getCurrentTravel()).thenReturn(currentTravel);
+        when(validator.validateTravel(currentTravel, destination)).thenReturn(Collections.emptyMap());
 
-        final ServiceResponse response = service.travel(pgi, travel);
+        final ServiceResponse response = service.travel(pgi, destination);
 
         assertFalse(response.hasError());
-        verify(traveler, times(1)).setCurrentTravel(travel);
-        verify(traveler, times(1)).setHistoric(any());
+
+        verify(traveler, times(1)).getCurrentTravel();
+        verify(traveler, times(1)).travelTo(destination);
+
         verify(repository, times(1)).findByPgi(pgi);
         verify(repository, times(1)).save(traveler);
+        verify(validator, times(1)).validateTravel(currentTravel, destination);
     }
 
     @Test
@@ -76,7 +92,7 @@ public class DefaultTravelerServiceTest {
         final String pgi = "myPgi";
         final Traveler traveler = new Traveler();
         traveler.setPgi(pgi);
-        traveler.setHistoric(List.of(new Travel("Where?", 1L)));
+        traveler.setHistoric(new ArrayList(){{ add(new Travel("Where?", 1L)); }});
 
         when(repository.findByPgi(pgi)).thenReturn(traveler);
 

@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -42,7 +43,7 @@ public class TravelerHandlerTest {
 
         when(service.findHistoric(anyString())).thenReturn(mockedServiceResponse);
         when(mockedServiceResponse.hasError()).thenReturn(Boolean.FALSE);
-        when(mockedServiceResponse.getResponse()).thenReturn(List.of(new Travel("Somewhere 1", 1L)));
+        when(mockedServiceResponse.getResponse()).thenReturn(new ArrayList(){{ add(new Travel("Somewhere 1", 1L)); }});
 
         mockMvc.perform(get(UrlMapping.Travelers.OLD_TRAVELS, "carvo123"))
                 .andExpect(status().is(HttpStatus.OK.value()))

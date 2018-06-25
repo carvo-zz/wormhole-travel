@@ -8,9 +8,7 @@ import com.gamesys.wormholetravel.validators.TravelValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DefaultTravelerService implements TravelerService {
@@ -28,21 +26,19 @@ public class DefaultTravelerService implements TravelerService {
 
     @Override
     public ServiceResponse<List<Travel>> findHistoric(final String pgi) {
-        final Traveler traveler = repository.findByPgi(pgi);
-        if (traveler == null) {
-            return new ServiceResponse<>(Map.of("error.pgi", "PGI not found"));
-        } else {
-            return new ServiceResponse<>(traveler.getHistoric());
-        }
+        return Optional.ofNullable(repository.findByPgi(pgi))
+                .map(t -> new ServiceResponse<>(t.getHistoric()))
+                .orElse(new ServiceResponse(new HashMap(){{ put("error.pgi", "PGI not found"); }}))
+        ;
     }
 
     @Override
-    public ServiceResponse travel(final String pgi, final Travel destination) {
+    public ServiceResponse<?> travel(final String pgi, final Travel destination) {
         return Optional.ofNullable(repository.findByPgi(pgi))
                 .map(t -> update(t, destination))
                 .orElseGet(() -> {
                     this.save(new Traveler(pgi, destination));
-                    return new ServiceResponse();
+                    return new ServiceResponse<>();
                 });
     }
 
@@ -50,17 +46,17 @@ public class DefaultTravelerService implements TravelerService {
         return repository.save(traveler);
     }
 
-    private ServiceResponse update(final Traveler traveler, final Travel destination) {
+    private ServiceResponse<?> update(final Traveler traveler, final Travel destination) {
         final Map<String, String> errors = validator.validateTravel(traveler.getCurrentTravel(), destination);
 
         return Optional.ofNullable(errors)
                 .filter(err -> !err.isEmpty())
-                .map(ServiceResponse::new)
+                .map(err -> new ServiceResponse<>(err))
                 .orElseGet(() -> {
                     traveler.travelTo(destination);
                     this.save(traveler);
 
-                    return new ServiceResponse();
+                    return new ServiceResponse<>();
                 });
     }
 

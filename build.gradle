@@ -17,15 +17,14 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'com.gamesys'
 version = '1.0.0-SNAPSHOT'
-sourceCompatibility = 1.9
-targetCompatibility = 1.9
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-//	compile('ch.qos.logback:logback-classic:1.2.3')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
