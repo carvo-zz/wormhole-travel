@@ -4,8 +4,6 @@ import com.gamesys.wormholetravel.UrlMapping;
 import com.gamesys.wormholetravel.commons.ServiceResponse;
 import com.gamesys.wormholetravel.handlers.TravelerHandler;
 import com.gamesys.wormholetravel.models.Travel;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gamesys.wormholetravel.models.Traveler;
 import com.gamesys.wormholetravel.services.TravelerService;
 import com.gamesys.wormholetravel.utils.JsonParser;
 import org.junit.Test;
@@ -19,7 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.*;

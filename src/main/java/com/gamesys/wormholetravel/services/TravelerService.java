@@ -6,9 +6,9 @@ import com.gamesys.wormholetravel.models.Traveler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@Validated
 public interface TravelerService {
     ServiceResponse<List<Traveler>> findAll();
 

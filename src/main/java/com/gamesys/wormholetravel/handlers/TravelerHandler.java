@@ -5,13 +5,11 @@ import com.gamesys.wormholetravel.commons.ServiceResponse;
 import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.models.Traveler;
 import com.gamesys.wormholetravel.services.TravelerService;
-import com.gamesys.wormholetravel.utils.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

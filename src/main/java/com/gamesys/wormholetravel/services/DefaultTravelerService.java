@@ -4,16 +4,19 @@ import com.gamesys.wormholetravel.commons.ServiceResponse;
 import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.models.Traveler;
 import com.gamesys.wormholetravel.repositories.TravelerRepository;
+import com.gamesys.wormholetravel.validators.TravelValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class DefaultTravelerService implements TravelerService {
+
+    @Autowired
+    private TravelValidator validator;
 
     @Autowired
     private TravelerRepository repository;
@@ -34,27 +37,32 @@ public class DefaultTravelerService implements TravelerService {
     }
 
     @Override
-    public ServiceResponse travel(final String pgi, final Travel travel) {
-        Optional.ofNullable(repository.findByPgi(pgi))
-                .ifPresentOrElse(
-                        traveler -> update(traveler, travel),
-                        () -> repository.save(new Traveler(pgi, travel))
-                );
-
-        return new ServiceResponse();
+    public ServiceResponse travel(final String pgi, final Travel destination) {
+        return Optional.ofNullable(repository.findByPgi(pgi))
+                .map(t -> update(t, destination))
+                .orElseGet(() -> {
+                    this.save(new Traveler(pgi, destination));
+                    return new ServiceResponse();
+                });
     }
 
-    private void update(final Traveler traveler, final Travel newTravel) {
-        final List<Travel> historical = Optional
-                .ofNullable(traveler.getHistoric())
-                .orElseGet(ArrayList::new);
-
-        Optional.ofNullable(traveler.getCurrentTravel())
-                .ifPresent(historical::add);
-
-        traveler.setCurrentTravel(newTravel);
-        traveler.setHistoric(historical);
-
-        repository.save(traveler);
+    private Traveler save(final Traveler traveler) {
+        return repository.save(traveler);
     }
+
+    private ServiceResponse update(final Traveler traveler, final Travel destination) {
+        final Map<String, String> errors = validator.validateTravel(traveler.getCurrentTravel(), destination);
+
+        return Optional.ofNullable(errors)
+                .filter(err -> !err.isEmpty())
+                .map(ServiceResponse::new)
+                .orElseGet(() -> {
+                    traveler.travelTo(destination);
+                    this.save(traveler);
+
+                    return new ServiceResponse();
+                });
+    }
+
+
 }
