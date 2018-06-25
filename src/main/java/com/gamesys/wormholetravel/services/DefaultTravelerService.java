@@ -1,5 +1,6 @@
 package com.gamesys.wormholetravel.services;
 
+import com.gamesys.wormholetravel.commons.DefaultServiceResponse;
 import com.gamesys.wormholetravel.commons.ServiceResponse;
 import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.models.Traveler;
@@ -8,7 +9,10 @@ import com.gamesys.wormholetravel.validators.TravelValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class DefaultTravelerService implements TravelerService {
@@ -21,14 +25,14 @@ public class DefaultTravelerService implements TravelerService {
 
     @Override
     public ServiceResponse<List<Traveler>> findAll() {
-        return new ServiceResponse<>(repository.findAll());
+        return new DefaultServiceResponse<>(repository.findAll());
     }
 
     @Override
     public ServiceResponse<List<Travel>> findHistoric(final String pgi) {
         return Optional.ofNullable(repository.findByPgi(pgi))
-                .map(t -> new ServiceResponse<>(t.getHistoric()))
-                .orElse(new ServiceResponse(new HashMap(){{ put("error.pgi", "PGI not found"); }}))
+                .map(t -> new DefaultServiceResponse<>(t.getHistoric()))
+                .orElse(new DefaultServiceResponse(new HashMap(){{ put("error.pgi", "PGI not found"); }}))
         ;
     }
 
@@ -38,7 +42,7 @@ public class DefaultTravelerService implements TravelerService {
                 .map(t -> update(t, destination))
                 .orElseGet(() -> {
                     this.save(new Traveler(pgi, destination));
-                    return new ServiceResponse<>();
+                    return new DefaultServiceResponse<>();
                 });
     }
 
@@ -51,12 +55,12 @@ public class DefaultTravelerService implements TravelerService {
 
         return Optional.ofNullable(errors)
                 .filter(err -> !err.isEmpty())
-                .map(err -> new ServiceResponse<>(err))
+                .map(err -> new DefaultServiceResponse<>(err))
                 .orElseGet(() -> {
                     traveler.travelTo(destination);
                     this.save(traveler);
 
-                    return new ServiceResponse<>();
+                    return new DefaultServiceResponse<>();
                 });
     }
 
