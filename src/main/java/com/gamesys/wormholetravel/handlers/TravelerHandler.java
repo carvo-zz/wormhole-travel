@@ -41,8 +41,8 @@ public class TravelerHandler {
     }
 
     @PostMapping(UrlMapping.Travelers.TRAVELS)
-    public ResponseEntity<String> travel(@PathVariable String pgi, @RequestBody Travel travel) {
-        final ServiceResponse response = service.travel(pgi, travel);
+    public ResponseEntity<String> travel(@PathVariable String pgi, @RequestBody Travel destination) {
+        final ServiceResponse response = service.travel(pgi, destination);
 
         if (response.hasError()) {
             return new ResponseEntity<>(response.getErrorsAsJson(), HttpStatus.BAD_REQUEST);
