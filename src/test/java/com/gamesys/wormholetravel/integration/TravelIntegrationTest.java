@@ -6,6 +6,7 @@ import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.integration.utils.UrlResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -38,13 +39,7 @@ public class TravelIntegrationTest {
         headers = new HttpHeaders();
     }
 
-    @Test
-    public void shouldValidateNullRequest() {
-
-    }
-
-
-    @Test
+    @Test @Ignore
     public void shouldTravel() throws Exception {
         final Travel travel = new Travel();
         travel.setDate(0L);

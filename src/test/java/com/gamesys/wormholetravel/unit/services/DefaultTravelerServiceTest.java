@@ -1,19 +1,19 @@
 package com.gamesys.wormholetravel.unit.services;
 
 import com.gamesys.wormholetravel.commons.ServiceResponse;
+import com.gamesys.wormholetravel.factories.DefaultServiceResponseFactory;
 import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.models.Traveler;
 import com.gamesys.wormholetravel.repositories.TravelerRepository;
 import com.gamesys.wormholetravel.services.DefaultTravelerService;
 import com.gamesys.wormholetravel.validators.TravelValidator;
-import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
+import com.gamesys.wormholetravel.validators.TravelerValidator;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.Spy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,13 @@ public class DefaultTravelerServiceTest {
     private TravelerRepository repository;
 
     @Mock
-    private TravelValidator validator;
+    private TravelValidator travelValidator;
+
+    @Mock
+    private TravelerValidator travelerValidator;
+
+    @Spy
+    private DefaultServiceResponseFactory responseFactory;
 
     @Before
     public void init() {
@@ -57,6 +63,8 @@ public class DefaultTravelerServiceTest {
     public void shouldTravelFirstTime() {
         final String pgi = "carvo123";
 
+        when(travelerValidator.validatePgi(pgi)).thenReturn(Collections.emptyMap());
+
         final ServiceResponse response = service.travel(pgi, new Travel());
 
         assertFalse(response.hasError());
@@ -71,9 +79,10 @@ public class DefaultTravelerServiceTest {
         final Traveler traveler = mock(Traveler.class);
         final Travel currentTravel = new Travel();
 
+        when(travelerValidator.validatePgi(pgi)).thenReturn(Collections.emptyMap());
         when(repository.findByPgi(pgi)).thenReturn(traveler);
         when(traveler.getCurrentTravel()).thenReturn(currentTravel);
-        when(validator.validateTravel(currentTravel, destination)).thenReturn(Collections.emptyMap());
+        when(travelValidator.validateTravel(currentTravel, destination)).thenReturn(Collections.emptyMap());
 
         final ServiceResponse response = service.travel(pgi, destination);
 
@@ -84,7 +93,7 @@ public class DefaultTravelerServiceTest {
 
         verify(repository, times(1)).findByPgi(pgi);
         verify(repository, times(1)).save(traveler);
-        verify(validator, times(1)).validateTravel(currentTravel, destination);
+        verify(travelValidator, times(1)).validateTravel(currentTravel, destination);
     }
 
     @Test
