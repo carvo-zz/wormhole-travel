@@ -23,7 +23,7 @@ public class TravelValidatorTest {
 
     @Test
     public void shouldValidateRequiredFields() {
-        final Map<String, String> errors = new TravelValidator().validateTravel(new Travel(), new Travel());
+        final Map<String, String> errors = new TravelValidator().validateRequired(new Travel());
 
         assertTrue(errors.containsKey(TravelValidator.MSG.NullDate.KEY));
         assertTrue(errors.containsKey(TravelValidator.MSG.BlankPlace.KEY));
