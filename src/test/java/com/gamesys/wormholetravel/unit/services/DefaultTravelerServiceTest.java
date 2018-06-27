@@ -17,6 +17,7 @@ import org.mockito.Spy;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -94,6 +95,42 @@ public class DefaultTravelerServiceTest {
         verify(repository, times(1)).findByPgi(pgi);
         verify(repository, times(1)).save(traveler);
         verify(travelValidator, times(1)).validateTravel(currentTravel, destination);
+    }
+
+    @Test
+    public void shouldValidateInvalidPgi() {
+        final String pgi = "asdfg12345xx";
+
+        when(travelerValidator.validatePgi(pgi)).thenReturn(new HashMap<String, String>(){{
+            put(TravelerValidator.MSG.InvalidPgi.KEY, TravelerValidator.MSG.InvalidPgi.MSG);
+        }});
+
+        final ServiceResponse<Traveler> response = service.travel(pgi, new Travel());
+
+        assertTrue(response.hasError());
+        assertEquals(1, response.getErrors().size());
+        verify(repository, never()).findByPgi(pgi);
+        verify(repository, never()).save(any());
+    }
+
+    @Test
+    public void shouldValidateInvalidTravel() {
+        final String pgi = "asdfg12345";
+        final Travel travel = new Travel();
+
+        when(travelerValidator.validatePgi(pgi)).thenReturn(Collections.emptyMap());
+        when(repository.findByPgi(pgi)).thenReturn(null);
+        when(travelValidator.validateRequired(travel)).thenReturn(new HashMap<String, String>() {{
+            put(TravelValidator.MSG.BlankPlace.KEY, TravelValidator.MSG.BlankPlace.MSG);
+            put(TravelValidator.MSG.NullDate.KEY, TravelValidator.MSG.NullDate.MSG);
+        }});
+
+        final ServiceResponse<Traveler> response = service.travel(pgi, travel);
+
+        assertTrue(response.hasError());
+        assertEquals(2, response.getErrors().size());
+        verify(repository, times(1)).findByPgi(pgi);
+        verify(repository, never()).save(any());
     }
 
     @Test
