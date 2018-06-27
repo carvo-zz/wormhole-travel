@@ -7,7 +7,8 @@
 
 ##Requirements:
 * Java 8
-* Gradle 4.x (wrapper is not supported)
+* Gradle 4.x (properly configured
+    to run gradle tasks without the wrapper)
 
 ##To run:
 ```gradle bootRun```
