@@ -1,7 +1,7 @@
 package com.gamesys.wormholetravel.integration;
 
-import com.gamesys.wormholetravel.App;
-import com.gamesys.wormholetravel.UrlMapping;
+import com.gamesys.wormholetravel.app.App;
+import com.gamesys.wormholetravel.app.UrlMapping;
 import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.integration.utils.UrlResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -18,9 +17,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

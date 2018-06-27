@@ -51,7 +51,7 @@ public class DefaultTravelerService implements TravelerService {
         return Optional.ofNullable(travelerValidator.validatePgi(pgi))
                 .filter(err -> !err.isEmpty())
                 .map(err -> responseFactory.createWithErrors(err))
-                .orElse(proceedToTravel(pgi, destination));
+                .orElseGet(() -> proceedToTravel(pgi, destination));
     }
 
     private ServiceResponse<Traveler> proceedToTravel(final String pgi, final Travel destination) {

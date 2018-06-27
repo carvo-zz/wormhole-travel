@@ -13,7 +13,7 @@ public class TravelerValidator {
         public final class InvalidPgi {
             public  static final String KEY = "error.invalidPgi";
             public  static final String MSG = "Invalid PGI format: " +
-                    "sould be alphanumeric, always starts with a letter, between 5-10 characters";
+                    "should be alphanumeric, always starts with a letter, between 5-10 characters";
         }
 
         public final class PgiNotFound {
