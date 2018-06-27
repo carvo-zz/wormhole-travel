@@ -1,6 +1,6 @@
 package com.gamesys.wormholetravel.unit.handlers;
 
-import com.gamesys.wormholetravel.app.UrlMapping;
+import com.gamesys.wormholetravel.UrlMapping;
 import com.gamesys.wormholetravel.commons.ServiceResponse;
 import com.gamesys.wormholetravel.handlers.TravelerHandler;
 import com.gamesys.wormholetravel.models.Travel;

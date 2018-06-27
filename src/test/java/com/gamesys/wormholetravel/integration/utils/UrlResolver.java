@@ -7,7 +7,7 @@ public final class UrlResolver {
     /**
      * Creates the target URI to test
      *
-     * @param port app port
+     * @param port configs port
      * @param targetResource should <b>start with slash</b>
      * @return localhost:<code>port</code>/<code>targetResource</code>
      */

@@ -1,7 +1,7 @@
 package com.gamesys.wormholetravel.integration;
 
-import com.gamesys.wormholetravel.app.App;
-import com.gamesys.wormholetravel.app.UrlMapping;
+import com.gamesys.wormholetravel.App;
+import com.gamesys.wormholetravel.UrlMapping;
 import com.gamesys.wormholetravel.models.Travel;
 import com.gamesys.wormholetravel.integration.utils.UrlResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
