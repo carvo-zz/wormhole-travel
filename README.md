@@ -2,8 +2,8 @@
 
 ##Assumptions:
 * PGI means Personal Galactic Identifier
-* A traveler cannot travel to more than one place at the same time
-    (it means the traveler has a 'current travel')
+* A traveler can't have a simultaneously travel
+(it means the traveler has a 'current travel')
 
 ##Requirements:
 * Java 8
