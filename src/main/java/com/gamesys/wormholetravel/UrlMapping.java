@@ -1,7 +1,7 @@
 package com.gamesys.wormholetravel;
 
 public final class UrlMapping {
-    private static final String BASE = "/wormhole-travel";
+    private static final String BASE = "/wormhole-travel/api/v1";
 
     public final class Travelers {
         public static final String BASE = UrlMapping.BASE + "/travelers";
