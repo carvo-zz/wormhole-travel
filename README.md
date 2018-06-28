@@ -9,6 +9,10 @@
 * Java 8
 * Gradle 4.x (properly configured
     to run gradle tasks without the wrapper)
+* Port **8080** free
 
 ## To run
 ```gradle bootRun```
+
+## API doc
+[API documentation](http://localhost:8080/swagger-ui.html)
