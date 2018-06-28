@@ -15,4 +15,6 @@
 ```gradle bootRun```
 
 ## API doc
-[API documentation](http://localhost:8080/swagger-ui.html)
+Access
+[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+after running.
